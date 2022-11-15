@@ -40,12 +40,24 @@ export class EventsService {
     return this.events;
   }
   getEventsByDay(Date: string): Event[] {
-    let events = this.getAllEvents();
-    events = events.filter((event) => event.Date === Date);
+    const events = this.events;
+    // console.log(events, Date);
+    for (const event of events) {
+      if (event.Date == Date) {
+        return [event];
+      }
+    }
+    // events = events.filter((event) => event.Date === Date);
     return events;
   }
   deleteEvent(id: number): string {
-    this.events = this.events.filter((event) => event.id !== id);
+    // this.events = this.events.filter((event) => event.id !== id);
+    const events = this.events;
+    for (const event of events) {
+      if (event.id == id) {
+        // this.events.remove(event);
+      }
+    }
     return 'Event deleted';
   }
 }

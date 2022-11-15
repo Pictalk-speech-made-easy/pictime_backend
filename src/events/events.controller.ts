@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   Post,
-  //   Param,
+  Param,
   Delete,
   //   Patch,
   Query,
@@ -19,18 +19,21 @@ export class EventsController {
   // create
   @Post()
   createEvent(@Body() createEventDto: CreateEventDto): Event {
+    console.log(this.EventsService.createEvent(createEventDto));
     return this.EventsService.createEvent(createEventDto);
   }
   // modify
 
   // read
-  @Get()
-  getEvents(@Query() date: string): Event[] {
+  @Get('/:date')
+  getEvents(@Param() date: string): Event[] {
+    // console.log(date.date);
     return this.EventsService.getEventsByDay(date);
   }
   //delete
-  @Delete()
+  @Delete('/:id')
   deleteEvent(@Body() id: number): string {
+    console.log('deleting ', id);
     return this.EventsService.deleteEvent(id);
   }
 }
