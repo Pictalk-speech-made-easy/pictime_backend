@@ -1,8 +1,18 @@
-import { Module } from '@nestjs/common';
-import { TasksModule } from './tasks/tasks.module';
-import { EventsModule } from './events/events.module';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
+import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { Module } from "@nestjs/common";
+import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
-  imports: [EventsModule, TasksModule],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(typeOrmConfig),
+    AuthModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
