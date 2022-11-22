@@ -19,7 +19,7 @@ export class EventsController {
   // create
   @Post()
   createEvent(@Body() createEventDto: CreateEventDto): Event {
-    console.log(this.EventsService.createEvent(createEventDto));
+    // console.log(this.EventsService.createEvent(createEventDto));
     return this.EventsService.createEvent(createEventDto);
   }
   // modify
