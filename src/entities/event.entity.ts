@@ -44,8 +44,11 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     @Column()
     type: string;
   
+    // faut que tu regarde pour le type JSON, je sais que sur Pictalk on le stringify avant de le rentrer
+    // dans la db. Mais je sais que tu peux aussi store un JSON mais c'est pas de type JSON
+    // c'est un type spécial. bref je met string sinon ça crash
     @Column()
-    feedback: JSON;
+    feedback: string;
   
     @Column()
     location: string;
