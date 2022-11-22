@@ -7,9 +7,12 @@ async function bootstrap() {
   if(!existsSync('tmp')){
     mkdir("tmp", () => {});
   }
+  if(!existsSync('files')){
+    mkdir("files", () => {});
+  }
   const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
