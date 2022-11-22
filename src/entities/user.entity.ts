@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Event } from './event.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -18,4 +19,16 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  // voilà comment on va mettre les events
+  // relation one to many. Un user, plusieurs events
+  /*
+  @OneToMany(() => Event, (event) => event.user, { eager: false })
+  events: Event[];
+  */
+  @CreateDateColumn()
+  createdDate: Date;
+    
+  @UpdateDateColumn()
+  updatedDate: Date;
 }
