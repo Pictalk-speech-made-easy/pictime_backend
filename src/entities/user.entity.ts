@@ -1,4 +1,5 @@
-import {BaseEntity,
+import {
+  BaseEntity,
   Entity,
   PrimaryGeneratedColumn,
   Column,
@@ -12,7 +13,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   username: string;
 
   @Column()

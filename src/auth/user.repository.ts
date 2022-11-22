@@ -8,7 +8,6 @@ export class UsersRepository extends Repository<User> {
     super();
   }
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    
     const { username, password } = authCredentialsDto;
 
     const user = this.create({ username, password });
