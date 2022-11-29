@@ -20,8 +20,8 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     dateEnd: Date;
   
     // je me souviens plus de ce que c'est cette attr
-    @Column()
-    start: number;
+    // @Column()
+    // start: number;
   
     // voilà comment on va mettre le user
     // relation one to many. Un user, plusieurs events
@@ -47,8 +47,8 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     // faut que tu regarde pour le type JSON, je sais que sur Pictalk on le stringify avant de le rentrer
     // dans la db. Mais je sais que tu peux aussi store un JSON mais c'est pas de type JSON
     // c'est un type spécial. bref je met string sinon ça crash
-    @Column()
-    feedback: string;
+    // @Column()
+    // feedback: string;
   
     @Column()
     location: string;

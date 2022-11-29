@@ -13,7 +13,7 @@ import { Event } from 'src/entities/event.entity';
 import { EventsService } from './event.service';
   // import { GetEvents } from './dto/get-event.dto';
   
-  @Controller('Events')
+  @Controller('events')
   export class EventsController {
     constructor(private EventsService: EventsService) {}
     // Ici c'est très bien, tu fait appel au service
@@ -49,4 +49,9 @@ import { EventsService } from './event.service';
       return this.EventsService.deleteEvent(id);
     }
     */
+    @Post()
+    createEvent(@Body() createEventDto: CreateEventDto): Event {
+      // console.log(typeof createEventDto.feedback);
+      return this.EventsService.createEvent(createEventDto);
+    }
   }

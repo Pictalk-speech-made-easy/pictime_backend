@@ -2,7 +2,8 @@
 // là tu vas devoir utiliser des validators pour valider que l'info
 // que te donne le client dans sa requête est bonne$
 
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsDate, IsDateString, IsISO8601, IsJSON, IsNotEmpty, IsNumber, IsOptional, IsString, IS_JSON } from "class-validator";
+import { Type } from 'class-transformer';
 
 // clem en a deja fait, si jamais tu galère
 export class CreateEventDto {
@@ -15,31 +16,38 @@ export class CreateEventDto {
     // ou si on va devoir le recevoir en string
     // et vérifier à l'arriver si c'est bien une Date
     // l'option 1 c'est mieux
+
     @IsNotEmpty()
+    @IsDateString()
+    // @Type(() => Date)
+    // @IsString()
+    dateStart: Date;
+
+    @IsNotEmpty()
+    @IsDateString()
+    dateEnd: Date;
+
+    // // j'ai un petit doute sur si ça va te cast en number ou pas
+    // // vérifie que si tu reçois number, il soit bien de type 
+    // // <number> et pas <string> j'ai déjà eu des mauvaise
+    // // surprise avec ça
+    // @IsNotEmpty()
+    // @IsNumber()
+    // start: number;
+
+    // // bref, je crois que tu as compris comment marche les validators
+    // // ça te sert à vérifier le type, dire si c'est optionel
+    // // (par exemple coleur ça pourrait l'être et tu met une couleur par default si aucune dans la rerquete)
+    // // LA DOC, REGARDE LA DOC QUAND TU SAIS PAS https://www.npmjs.com/package/@nestjs/class-validator/v/0.13.1
+    // // bonne chance :)
+
+    @IsOptional()
     @IsString()
-    dateStart: string;
-
-    @IsNotEmpty()
-    @IsString()
-    dateEnd: string;
-
-    // j'ai un petit doute sur si ça va te cast en number ou pas
-    // vérifie que si tu reçois number, il soit bien de type 
-    // <number> et pas <string> j'ai déjà eu des mauvaise
-    // surprise avec ça
-    @IsNotEmpty()
-    @IsNumber()
-    start: number;
-
-    // bref, je crois que tu as compris comment marche les validators
-    // ça te sert à vérifier le type, dire si c'est optionel
-    // (par exemple coleur ça pourrait l'être et tu met une couleur par default si aucune dans la rerquete)
-    // LA DOC, REGARDE LA DOC QUAND TU SAIS PAS https://www.npmjs.com/package/@nestjs/class-validator/v/0.13.1
-    // bonne chance :)
-
     type: string;
 
-    feedback: JSON;
+    
+    // @IsJSON() // j'ai rage quit mais je m'en occupe la semaine pro 
+    // feedback: JSON;
 
     location: string;
 

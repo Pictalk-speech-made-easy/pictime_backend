@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Event } from 'src/entities/event.entity';
+import { SaveOptions, RemoveOptions } from 'typeorm';
 
 import { v4 as uuid } from 'uuid';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -17,15 +18,13 @@ export class EventsService {
 
 
   // Je met en commentaire pour que ça crash pas pour clem
-  /*
   createEvent(createEventDto: CreateEventDto): Event {
     const {
       name,
       dateStart,
       dateEnd,
-      start,
       type,
-      feedback,
+      // feedback,
       location,
       description,
       category,
@@ -38,24 +37,46 @@ export class EventsService {
     // soit String et tu converti dans le controller
     // soit tu converti dans le Dto (meilleur)
     
-    const Event: Event = {
+    const event: Event = {
       name,
       dateStart,
       dateEnd,
-      start,
       type,
-      feedback,
+      // feedback,
       location,
       description,
       category,
       repetition,
       color,
+      id: uuid(),
+      // feedback: '',
+      createdDate: undefined,
+      updatedDate: undefined,
+      hasId: function (): boolean {
+        throw new Error('Function not implemented.');
+      },
+      save: function (options?: SaveOptions): Promise<Event> {
+        throw new Error('Function not implemented.');
+      },
+      remove: function (options?: RemoveOptions): Promise<Event> {
+        throw new Error('Function not implemented.');
+      },
+      softRemove: function (options?: SaveOptions): Promise<Event> {
+        throw new Error('Function not implemented.');
+      },
+      recover: function (options?: SaveOptions): Promise<Event> {
+        throw new Error('Function not implemented.');
+      },
+      reload: function (): Promise<void> {
+        throw new Error('Function not implemented.');
+      }
     };
     
-    this.events.push(Event);
-    return Event;
+    this.events.push(event);
+    console.log('event created', event);
+    return event;
     
-  }*/
+  }
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
   getAllEvents(): Event[] {
