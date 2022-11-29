@@ -34,6 +34,7 @@ export class EventsService {
       Color,
     };
     this.events.push(Event);
+    console.log(this.events);
     return Event;
   }
   getAllEvents(): Event[] {
