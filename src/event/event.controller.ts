@@ -52,7 +52,7 @@ import { EventsService } from './event.service';
     }
     */
     @Post()
-    createEvent(@Body() createEventDto: CreateEventDto): Event {
+    createEvent(@Body() createEventDto: CreateEventDto): Promise<Event> {
       // console.log(typeof createEventDto.feedback);
       return this.EventsService.createEvent(createEventDto);
     }

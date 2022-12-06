@@ -71,6 +71,7 @@ export class CreateEventDto {
     @Max(4)
     repetition: number; // 0 if none, 1 if dayly, 2 if weekly, 3 if monthly, 4 if yearly ?
     
+    @IsOptional()
     @IsHexColor()
     color: string; // hexa
   }

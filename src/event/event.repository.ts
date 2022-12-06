@@ -1,3 +1,5 @@
+import { InternalServerErrorException } from '@nestjs/common';
+import { CreateEventDto } from './dto/create-event.dto';
 import { Event } from "src/entities/event.entity";
 import { EntityRepository, Repository } from "typeorm";
 import { User } from 'src/entities/user.entity';
@@ -10,6 +12,26 @@ export class EventRepository extends Repository<Event> {
     // createEvent
     // modifyEvent
     // REGARDE SUR LE REPO PICTALK picto.repository.ts
+    async createEvent(createEventDto: CreateEventDto): Promise<Event> {
+        let { name, dateStart, dateEnd, type, feedback, location, description, category, repetition, color} = createEventDto;
+        const event = new Event();
+        event.name = name;
+        event.dateStart = dateStart;
+        event.dateEnd = dateEnd;
+        event.type = type ? type : null;
+        event.feedback = feedback ? feedback : null;
+        event.location = location ? location : null;
+        event.description = description ? description : null;
+        event.category = category ? category : null;
+        event.repetition = repetition;
+        event.color = color;
+        try { 
+            await event.save();
+        } catch (error) {
+            throw new InternalServerErrorException(error);
+        }
+        return event; 
+    }
     /*
     async createPicto(createPictoDto: CreatePictoDto, user: User, filename: string): Promise<Picto> {
         let { meaning, speech, collectionIds, color} = createPictoDto;

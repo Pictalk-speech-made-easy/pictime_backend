@@ -1,11 +1,14 @@
+import { EventRepository } from './event.repository';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from 'src/entities/event.entity';
-import { SaveOptions, RemoveOptions } from 'typeorm';
-
-import { v4 as uuid } from 'uuid';
 import { CreateEventDto } from './dto/create-event.dto';
 @Injectable()
 export class EventsService {
+  constructor(
+    @InjectRepository(EventRepository)
+    private EventRepository : EventRepository,
+  ) {} 
   private events: Event[] = [];
   // ICI IL TE FAUT :
   // getEventById
@@ -18,64 +21,15 @@ export class EventsService {
 
 
   // Je met en commentaire pour que ça crash pas pour clem
-  createEvent(createEventDto: CreateEventDto): Event {
-    const {
-      name,
-      dateStart,
-      dateEnd,
-      type,
-      // feedback,
-      location,
-      description,
-      category,
-      repetition,
-      color,
-    } = createEventDto;
+  createEvent(createEventDto: CreateEventDto): Promise<Event> {
     // tout ce bloc, il va pas marcher tant que
     // tu auras pas trouver comment faire passer
     // une date au bon format
     // soit String et tu converti dans le controller
     // soit tu converti dans le Dto (meilleur)
-    
-    const event: Event = {
-      name,
-      dateStart,
-      dateEnd,
-      type,
-      // feedback,
-      location,
-      description,
-      category,
-      repetition,
-      color,
-      id: uuid(),
-      // feedback: '',
-      createdDate: undefined,
-      updatedDate: undefined,
-      hasId: function (): boolean {
-        throw new Error('Function not implemented.');
-      },
-      save: function (options?: SaveOptions): Promise<Event> {
-        throw new Error('Function not implemented.');
-      },
-      remove: function (options?: RemoveOptions): Promise<Event> {
-        throw new Error('Function not implemented.');
-      },
-      softRemove: function (options?: SaveOptions): Promise<Event> {
-        throw new Error('Function not implemented.');
-      },
-      recover: function (options?: SaveOptions): Promise<Event> {
-        throw new Error('Function not implemented.');
-      },
-      reload: function (): Promise<void> {
-        throw new Error('Function not implemented.');
-      }
-    };
-    
-    this.events.push(event);
-    console.log('event created', event);
-    return event;
-    
+    console.log(createEventDto);
+    return this.EventRepository.createEvent(createEventDto);
+
   }
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
