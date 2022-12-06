@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from 'src/entities/event.entity';
 import { CreateEventDto } from './dto/create-event.dto';
+import { ModifyEventDto } from './dto/modify-event.dto';
+import { Between } from 'typeorm';
 @Injectable()
 export class EventsService {
   constructor(
@@ -39,17 +41,67 @@ export class EventsService {
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
   
-  getEventsByDate(date: Date): Event[] {
-    const events = this.events;
+  async getEventsByDate(date: Date): Promise<Event[]> {
+    //const events = this.events;
     // console.log(events, Date);
-    for (let event of events) {
-      if (event.dateStart.getDate() == date.getDate() && event.dateStart.getMonth() == date.getMonth() && event.dateStart.getFullYear() == date.getFullYear()) {
-        return [event];
+    // for (let event of events) {
+    //   if (event.dateStart.getDate() == date.getDate() && event.dateStart.getMonth() == date.getMonth() && event.dateStart.getFullYear() == date.getFullYear()) {
+    //     return [event];
+    //   }
+    // }
+    //console.log(events);
+    let dbDate = date.toUTCString();
+    const events = await this.EventRepository.find({ 
+      where: {
+        dateStart: Between(
+          new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0),
+          new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59)
+        )
       }
-    }
-    console.log(events);
+    })
     // events = events.filter((event) => event.Date === Date);
     return events;
+  }
+
+  getEventById(id: number): Event {
+    const event = this.events.find((event) => event.id === id);
+    return event;
+  }
+
+  modifyEvent(id: number, modifyEventDto: ModifyEventDto): Event {
+    const event = this.getEventById(id);
+    let { name, dateStart, dateEnd, type, feedback, location, description, category, repetition, color } = modifyEventDto;
+    if (name) {
+      event.name = name;
+    }
+    if (dateStart) {
+      event.dateStart = dateStart;
+    }
+    if (dateEnd) {
+      event.dateEnd = dateEnd;
+    }
+    if (type) {
+      event.type = type;
+    }
+    if (feedback) {
+      event.feedback = feedback;
+    }
+    if (location) {
+      event.location = location;
+    }
+    if (description) {
+      event.description = description;
+    }
+    if (category) {
+      event.category = category;
+    }
+    if (repetition) {
+      event.repetition = repetition;
+    }
+    if (color) {
+      event.color = color;
+    }
+    return event;
   }
   
   // cette fonction elle devra faire un appel au repository

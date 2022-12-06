@@ -1,13 +1,9 @@
-
-// là tu vas devoir utiliser des validators pour valider que l'info
-// que te donne le client dans sa requête est bonne$
-
 import { IsDate, IsDateString, IsISO8601, IsJSON, IsNotEmpty, IsInt, Min, Max, IsOptional, IsString, IS_JSON, IsHexColor, IsNumber, IsNumberString } from "class-validator";
 import { Type } from 'class-transformer';
 
 // clem en a deja fait, si jamais tu galère
-export class CreateEventDto {
-    @IsNotEmpty()
+export class ModifyEventDto {
+    @IsOptional()
     @IsString()
     name: string;
 
@@ -17,16 +13,15 @@ export class CreateEventDto {
     // et vérifier à l'arriver si c'est bien une Date
     // l'option 1 c'est mieux
 
-    @IsNotEmpty()
-    @IsNumber()
-    @Type(() => Number)
+    @IsOptional()
+    @IsDateString()
+    // @Type(() => Date)
     // @IsString()
-    dateStart: number;
+    dateStart: Date;
 
-    @IsNotEmpty()
-    @IsNumber()
-    @Type(() => Number)
-    dateEnd: number;
+    @IsOptional()
+    @IsDateString()
+    dateEnd: Date;
 
     // // j'ai un petit doute sur si ça va te cast en number ou pas
     // // vérifie que si tu reçois number, il soit bien de type 
@@ -43,7 +38,6 @@ export class CreateEventDto {
     // // bonne chance :)
 
     @IsOptional()
-    @IsString()
     type: string;
 
     

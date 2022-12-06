@@ -16,8 +16,21 @@ export class EventRepository extends Repository<Event> {
         let { name, dateStart, dateEnd, type, feedback, location, description, category, repetition, color} = createEventDto;
         const event = new Event();
         event.name = name;
-        event.dateStart = dateStart;
-        event.dateEnd = dateEnd;
+        console.log("dateStart", dateStart);
+        console.log("typeof +DS", typeof +dateStart);
+        const dateStartDate = new Date(+dateStart);
+        console.log("dateStartDate (after conversion to date)", dateStartDate);
+        console.log("typeof dateStartDate", typeof dateStartDate);
+        console.log("Time value in ms : ", dateStartDate.getTime());
+        console.log("Difference in minutes between the time on the local computer and Universal Coordinated Time (UTC)", dateStartDate.getTimezoneOffset())
+        console.log("Date converted to a string using Universal Coordinated Time (UTC)", dateStartDate.toUTCString());
+        // console.log(Date.UTC(2022, 11, 6, 15, 55, 30));
+
+        // to counter the time zone effect 
+        let dbDate = new Date(dateStartDate.getTime() + dateStartDate.getTimezoneOffset() * 60 * 1000); // c'est moche mais ça a le mérite de marcher dans l'absolu
+        console.log("dbDate", dbDate);
+        event.dateStart = new Date(dbDate);
+        event.dateEnd = dateStartDate;
         event.type = type ? type : null;
         event.feedback = feedback ? feedback : null;
         event.location = location ? location : null;

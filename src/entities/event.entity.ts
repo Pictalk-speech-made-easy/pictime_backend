@@ -13,7 +13,7 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     // plutôt que avec des string. Car on pourra à la suite faire 
     // des opération genre Date1 - Date2 qui sera pratique
     // pour calculer la durée par example
-    @Column()
+    @Column("")
     dateStart: Date;
   
     @Column()

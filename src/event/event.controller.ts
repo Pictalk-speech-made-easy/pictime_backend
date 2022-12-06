@@ -4,13 +4,16 @@ import {
     Get,
     Post,
     Param,
+    Put,
     Delete,
     //   Patch,
     Query,
     ValidationPipe,
+    ParseIntPipe
   } from '@nestjs/common';
 import { Event } from 'src/entities/event.entity';
   import { CreateEventDto } from './dto/create-event.dto';
+  import { ModifyEventDto } from './dto/modify-event.dto';
 import { dateDto } from './dto/isDate.dto';
 import { EventsService } from './event.service';
   // import { GetEvents } from './dto/get-event.dto';
@@ -58,17 +61,19 @@ import { EventsService } from './event.service';
     }
 
     @Get('/date')
-    getEventsByDate(@Query(ValidationPipe) dateDto: dateDto): Event[] {
-
-      console.log("i'm not deaf");
+    getEventsByDate(@Query(ValidationPipe) dateDto: dateDto): Promise<Event[]> {
       let date_milis = Date.parse(dateDto.date); 
-      const date = new Date(date_milis)
+      console.log(date_milis);
+      const date = new Date(date_milis);
       console.log(date);
-      console.log(typeof(date));
-      console.log(date.getDate());
-      console.log(date.getMonth());
-      console.log(date.getFullYear());
+      console.log(date.toUTCString());
       return this.EventsService.getEventsByDate(date);
+    }
+
+    @Put('/:id')
+    modifyEvent(@Param('id', ParseIntPipe) id: number, @Body() modifyEventDto: ModifyEventDto): Event {
+      // console.log(this.EventsService.createEvent(createEventDto));
+      return this.EventsService.modifyEvent(id, modifyEventDto);
     }
 
 
