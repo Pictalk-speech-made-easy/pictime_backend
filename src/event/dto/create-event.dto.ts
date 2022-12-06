@@ -2,7 +2,7 @@
 // là tu vas devoir utiliser des validators pour valider que l'info
 // que te donne le client dans sa requête est bonne$
 
-import { IsDate, IsDateString, IsISO8601, IsJSON, IsNotEmpty, IsNumber, IsOptional, IsString, IS_JSON } from "class-validator";
+import { IsDate, IsDateString, IsISO8601, IsJSON, IsNotEmpty, IsInt, Min, Max, IsOptional, IsString, IS_JSON, IsHexColor, IsNumber, IsNumberString } from "class-validator";
 import { Type } from 'class-transformer';
 
 // clem en a deja fait, si jamais tu galère
@@ -47,17 +47,30 @@ export class CreateEventDto {
 
     
     // @IsJSON() // j'ai rage quit mais je m'en occupe la semaine pro 
-    // feedback: JSON;
+    @IsOptional()
+    @IsString()
+    feedback: string;
 
+    @IsOptional()
+    @IsString()
     location: string;
 
+    @IsOptional()
+    @IsString()
     description: string;
 
+    @IsOptional()
+    @IsString()
     category: string;
 
-    // ça tu peux faire un check pour un numéro entre 0 et 4 pas ex
+    @IsOptional()
+    @IsNumber()
+    @Type(()=> Number)
+    @IsInt()
+    @Min(0)
+    @Max(4)
     repetition: number; // 0 if none, 1 if dayly, 2 if weekly, 3 if monthly, 4 if yearly ?
     
-    // ça si tu regarde dans le code Pictalk, il y a un validator qui check si couleur
+    @IsHexColor()
     color: string; // hexa
   }

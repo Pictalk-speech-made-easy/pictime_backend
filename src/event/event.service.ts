@@ -84,19 +84,20 @@ export class EventsService {
   }
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
-  /*
-  getEventsByDay(Date: string): Event[] {
+  
+  getEventsByDate(date: Date): Event[] {
     const events = this.events;
     // console.log(events, Date);
-    for (const event of events) {
-      if (event.Date == Date) {
+    for (let event of events) {
+      if (event.dateStart.getDate() == date.getDate() && event.dateStart.getMonth() == date.getMonth() && event.dateStart.getFullYear() == date.getFullYear()) {
         return [event];
       }
     }
+    console.log(events);
     // events = events.filter((event) => event.Date === Date);
     return events;
   }
-  */
+  
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
   /*
