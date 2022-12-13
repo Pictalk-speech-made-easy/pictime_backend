@@ -5,6 +5,10 @@ import { Event } from 'src/entities/event.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { ModifyEventDto } from './dto/modify-event.dto';
 import { Between } from 'typeorm';
+import { User } from 'src/entities/user.entity';
+import { DeleteEventDto } from './dto/delete-event.dto';
+
+
 @Injectable()
 export class EventsService {
   constructor(
@@ -35,8 +39,8 @@ export class EventsService {
   }
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
-  getAllEvents(): Event[] {
-    return this.events;
+  getAllEvents(user: User): Promise<Event[]> {
+    return this.EventRepository.find({where : {userId: user.id}});
   }
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données
@@ -63,46 +67,33 @@ export class EventsService {
     return events;
   }
 
-  getEventById(id: number): Event {
-    const event = this.events.find((event) => event.id === id);
-    return event;
+  getEventById(id: number): Promise<Event> {
+    // let event: Event;
+    const event = this.EventRepository.findOne({where : {id}});
+    if(!event) {
+      throw new Error('Event not found');
+    } else {
+      return event;
+    }
+    // const events = this.getAllEvents();
+    // for (let e of events) {
+    //   if (e.id == id) {
+    //     event = e;
+    //   }
+    // }
+    // console.log(event);
+    // return event;
   }
 
-  modifyEvent(id: number, modifyEventDto: ModifyEventDto): Event {
-    const event = this.getEventById(id);
-    let { name, dateStart, dateEnd, type, feedback, location, description, category, repetition, color } = modifyEventDto;
-    if (name) {
-      event.name = name;
-    }
-    if (dateStart) {
-      event.dateStart = dateStart;
-    }
-    if (dateEnd) {
-      event.dateEnd = dateEnd;
-    }
-    if (type) {
-      event.type = type;
-    }
-    if (feedback) {
-      event.feedback = feedback;
-    }
-    if (location) {
-      event.location = location;
-    }
-    if (description) {
-      event.description = description;
-    }
-    if (category) {
-      event.category = category;
-    }
-    if (repetition) {
-      event.repetition = repetition;
-    }
-    if (color) {
-      event.color = color;
-    }
-    return event;
+  async modifyEvent(id: number, modifyEventDto: ModifyEventDto): Promise<Event> {
+    let event = await this.getEventById(id);
+    return this.EventRepository.modifyEvent(event, modifyEventDto);
   }
+
+  // async deleteEvent(deleteEventDto: DeleteEventDto): Promise<void> {
+  //   // const event = await this.getEventById(deleteEventDto.id);
+  //   const result = await delete(deleteEvent.Dto.id);
+  // }
   
   // cette fonction elle devra faire un appel au repository
   // le repository fera une query à la base de données

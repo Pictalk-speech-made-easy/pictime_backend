@@ -21,12 +21,12 @@ export class CreateEventDto {
     @IsNumber()
     @Type(() => Number)
     // @IsString()
-    dateStart: number;
+    dateStart: Date;
 
     @IsNotEmpty()
     @IsNumber()
     @Type(() => Number)
-    dateEnd: number;
+    dateEnd: Date;
 
     // // j'ai un petit doute sur si ça va te cast en number ou pas
     // // vérifie que si tu reçois number, il soit bien de type 

@@ -27,7 +27,7 @@ export class EventRepository extends Repository<Event> {
         // console.log(Date.UTC(2022, 11, 6, 15, 55, 30));
 
         // to counter the time zone effect 
-        let dbDate = new Date(dateStartDate.getTime() + dateStartDate.getTimezoneOffset() * 60 * 1000); // c'est moche mais ça a le mérite de marcher dans l'absolu
+        let dbDate = new Date(dateStartDate.getTime()); 
         console.log("dbDate", dbDate);
         event.dateStart = new Date(dbDate);
         event.dateEnd = dateStartDate;
@@ -45,6 +45,50 @@ export class EventRepository extends Repository<Event> {
         }
         return event; 
     }
+
+    async modifyEvent(event: Event, modifyEventDto: CreateEventDto): Promise<Event> {
+        let { name, dateStart, dateEnd, type, feedback, location, description, category, repetition, color } = modifyEventDto;
+        if (name) {
+          event.name = name;
+        }
+        if (dateStart) {
+            const dateStartDate = new Date(+dateStart);
+            let dbDateStart = new Date(dateStartDate.getTime()); 
+            event.dateStart = new Date(dbDateStart);
+        }
+        if (dateEnd) {
+            const dateEndDate = new Date(+dateEnd);
+            let dbDateEnd = new Date(dateEndDate.getTime()); 
+            event.dateEnd = new Date(dbDateEnd);
+        }
+        if (type) {
+          event.type = type;
+        }
+        if (feedback) {
+          event.feedback = feedback;
+        }
+        if (location) {
+          event.location = location;
+        }
+        if (description) {
+          event.description = description;
+        }
+        if (category) {
+          event.category = category;
+        }
+        if (repetition) {
+          event.repetition = repetition;
+        }
+        if (color) {
+          event.color = color;
+        }
+        return event;
+    }
+
+    async deleteEvent(event: Event): Promise<Event> {
+        return event;
+    }
+
     /*
     async createPicto(createPictoDto: CreatePictoDto, user: User, filename: string): Promise<Picto> {
         let { meaning, speech, collectionIds, color} = createPictoDto;
