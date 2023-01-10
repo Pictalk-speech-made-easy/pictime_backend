@@ -24,13 +24,15 @@ export class EventRepository extends Repository<Event> {
         console.log("Time value in ms : ", dateStartDate.getTime());
         console.log("Difference in minutes between the time on the local computer and Universal Coordinated Time (UTC)", dateStartDate.getTimezoneOffset())
         console.log("Date converted to a string using Universal Coordinated Time (UTC)", dateStartDate.toUTCString());
+        const dateEndDate = new Date(+dateEnd);
         // console.log(Date.UTC(2022, 11, 6, 15, 55, 30));
 
         // to counter the time zone effect 
-        let dbDate = new Date(dateStartDate.getTime()); 
-        console.log("dbDate", dbDate);
-        event.dateStart = new Date(dbDate);
-        event.dateEnd = dateStartDate;
+        let dbDateStart = new Date(dateStartDate.getTime()); 
+        let dbDateEnd = new Date(dateEndDate.getTime());
+        console.log("dbDate", dbDateStart);
+        event.dateStart = new Date(dbDateStart);
+        event.dateEnd = new Date(dbDateEnd);
         event.type = type ? type : null;
         event.feedback = feedback ? feedback : null;
         event.location = location ? location : null;
