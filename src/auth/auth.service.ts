@@ -5,6 +5,7 @@ import { AuthCredentialsDto } from './dto/AuthCredentialsDto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload.interface';
+import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -29,4 +30,8 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
   }
+
+  async getUserDetails(user: User): Promise<User> {
+    return this.usersRepository.getUserDetails(user);
+    }
 }

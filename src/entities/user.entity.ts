@@ -1,3 +1,4 @@
+import { ModuleTokenFactory } from '@nestjs/core/injector/module-token-factory';
 import {
   BaseEntity,
   Entity,
