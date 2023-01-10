@@ -13,15 +13,15 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     // plutôt que avec des string. Car on pourra à la suite faire 
     // des opération genre Date1 - Date2 qui sera pratique
     // pour calculer la durée par example
-    @Column()
+    @Column("")
     dateStart: Date;
   
     @Column()
     dateEnd: Date;
   
     // je me souviens plus de ce que c'est cette attr
-    @Column()
-    start: number;
+    // @Column()
+    // start: number;
   
     // voilà comment on va mettre le user
     // relation one to many. Un user, plusieurs events
@@ -41,19 +41,19 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     // @Column()
     // participants: User[];
   
-    @Column()
+    @Column({nullable: true})
     type: string;
   
     // faut que tu regarde pour le type JSON, je sais que sur Pictalk on le stringify avant de le rentrer
     // dans la db. Mais je sais que tu peux aussi store un JSON mais c'est pas de type JSON
     // c'est un type spécial. bref je met string sinon ça crash
-    @Column()
+    @Column({nullable: true})
     feedback: string;
   
-    @Column()
+    @Column({nullable: true})
     location: string;
   
-    @Column()
+    @Column({nullable: true})
     description: string;
   
     // il faudra ajouter l'entité picto plus tard ...
@@ -66,13 +66,13 @@ import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, CreateDateColumn, U
     @JoinTable()
     pictos : Picto[];
     */
-    @Column()
+    @Column({nullable: true})
     category: string;
   
-    @Column()
+    @Column({default: 0})
     repetition: number; // 0 if none, 1 if dayly, 2 if weekly, 3 if monthly, 4 if yearly ? YES
   
-    @Column()
+    @Column({default: "#f1f1f1"})
     color: string; // hexa
 
     @CreateDateColumn()
